@@ -21,6 +21,30 @@ public class ImageTracking : MonoBehaviour
     public TMP_Text markerStatusText;
     private bool markerDetected = false;
 
+
+    public GameObject scanSurfaceUI; //painel pra scanear a superfície
+    public TMP_Text scanSurfaceText; //texto pra scanear a superfície
+    public float scanSurfaceDuration = 5.5f; //aviso durará 5.5 segundos
+
+
+    private void Start()
+    {
+        if (scanSurfaceUI != null)
+        {
+            scanSurfaceUI.SetActive(true);
+            StartCoroutine(HideScanSurfaceAfterDelay());
+        }
+
+
+        if (scanSurfaceText != null)
+        {
+            scanSurfaceText.gameObject.SetActive(true);
+            StartCoroutine(HideScanSurfaceAfterDelay());
+        }
+
+    }
+
+
     private void OnEnable()
     {
         manager.trackedImagesChanged += OnChanged;
@@ -34,6 +58,7 @@ public class ImageTracking : MonoBehaviour
 
         }
 
+      
     }
 
     private void OnDisable()
@@ -142,7 +167,12 @@ public class ImageTracking : MonoBehaviour
                 if (raycastManager.Raycast(new Vector2(Screen.width / 2f, Screen.height / 2f),_hits,TrackableType.PlaneWithinPolygon))
                 {
                     Vector3 realPlanePoint = _hits[0].pose.position;
+
+                    // 1) Define o plano (referência lógica)
                     placement.SetPlane(realPlanePoint, Vector3.up);
+
+                    currentGardenRoot.transform.position = new Vector3( realPlanePoint.x, realPlanePoint.y,realPlanePoint.z);
+
                 }
                 else
                 {
@@ -169,4 +199,19 @@ public class ImageTracking : MonoBehaviour
         yield return new WaitForSeconds(2f);
         markerStatusText.gameObject.SetActive(false);
     }
+
+
+    private IEnumerator HideScanSurfaceAfterDelay()
+    {
+        yield return new WaitForSeconds(scanSurfaceDuration);
+
+        if (scanSurfaceUI != null)
+            scanSurfaceUI.SetActive(false);
+
+
+        if (scanSurfaceText != null)
+            scanSurfaceText.gameObject.SetActive(false);
+
+    }
 }
+

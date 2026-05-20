@@ -18,26 +18,6 @@ MonoBehaviour:
     m_Storage: []
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 4663477520703961994
-      m_GuidHigh: 5098674494156684963
-    m_SerializedTextureGuid:
-      m_GuidLow: 7031363171080193996
-      m_GuidHigh: 7293337858267455194
-    m_Size: {x: 0.05, y: 0.06666667}
-    m_SpecifySize: 1
-    m_Name: LED
-    m_Texture: {fileID: 2800000, guid: e2ffc7cc6b8c6194da9ef0ec23243765, type: 3}
-  - m_SerializedGuid:
-      m_GuidLow: 5432718254727591788
-      m_GuidHigh: 16921736089167308217
-    m_SerializedTextureGuid:
-      m_GuidLow: 4324618041234520957
-      m_GuidHigh: 5307803503265441307
-    m_Size: {x: 0.08998619, y: 0.1}
-    m_SpecifySize: 1
-    m_Name: quantosQueresMarker
-    m_Texture: {fileID: 2800000, guid: 19077b7d21323c041be6b50d2a1ba949, type: 3}
-  - m_SerializedGuid:
       m_GuidLow: 4915629752506380644
       m_GuidHigh: 7532075022882623141
     m_SerializedTextureGuid:
