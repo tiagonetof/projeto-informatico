@@ -23,24 +23,23 @@ public class ImageTracking : MonoBehaviour
 
 
     public GameObject scanSurfaceUI; //painel pra scanear a superfície
-    public TMP_Text scanSurfaceText; //texto pra scanear a superfície
-    public float scanSurfaceDuration = 5.5f; //aviso durará 5.5 segundos
+
+
+    //valores estão definidos no inspetor!
+    [SerializeField] private float cameraOpeningDuration;
+    [SerializeField] private float scanSurfaceDuration;
 
 
     private void Start()
     {
+        
+
         if (scanSurfaceUI != null)
         {
-            scanSurfaceUI.SetActive(true);
-            StartCoroutine(HideScanSurfaceAfterDelay());
+            scanSurfaceUI.SetActive(false); //garante que o painel começa escondido
+            StartCoroutine(CameraAndScanFlow());
         }
 
-
-        if (scanSurfaceText != null)
-        {
-            scanSurfaceText.gameObject.SetActive(true);
-            StartCoroutine(HideScanSurfaceAfterDelay());
-        }
 
     }
 
@@ -57,14 +56,18 @@ public class ImageTracking : MonoBehaviour
             markerStatusText.gameObject.SetActive(true);
 
         }
+        
 
-      
+
     }
 
     private void OnDisable()
     {
         manager.trackedImagesChanged -= OnChanged;
+       
     }
+
+  
 
     private void OnChanged(ARTrackedImagesChangedEventArgs args)
     {
@@ -201,17 +204,49 @@ public class ImageTracking : MonoBehaviour
     }
 
 
-    private IEnumerator HideScanSurfaceAfterDelay()
-    {
-        yield return new WaitForSeconds(scanSurfaceDuration);
 
+    private IEnumerator CameraAndScanFlow()
+    {
+        Debug.Log("cameraOpeningDuration = " + cameraOpeningDuration);
+
+        float t = Time.realtimeSinceStartup;
+        
+        Debug.Log("START REAL TIME: " + t);
+
+
+        //esperar a câmara abrir
+        yield return new WaitForSecondsRealtime(cameraOpeningDuration);
+
+        Debug.Log("DELAY REAL: " + (Time.realtimeSinceStartup - t));
+
+        //mostrar UI
+        if (scanSurfaceUI != null)
+            scanSurfaceUI.SetActive(true);
+
+        //esperar duração do aviso
+        yield return new WaitForSecondsRealtime(scanSurfaceDuration);
+
+        //esconder UI
         if (scanSurfaceUI != null)
             scanSurfaceUI.SetActive(false);
-
-
-        if (scanSurfaceText != null)
-            scanSurfaceText.gameObject.SetActive(false);
-
     }
+
+
+    /*
+private IEnumerator HideScanSurfaceAfterDelay()
+{
+    yield return new WaitForSeconds(scanSurfaceDuration);
+
+    if (scanSurfaceUI != null)
+        scanSurfaceUI.SetActive(false);
+
+
+}
+
+private IEnumerator WaitForCameraToOpen()
+{
+    yield return new WaitForSeconds(cameraOpeningDuration);
+
+}*/
 }
 
