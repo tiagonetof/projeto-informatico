@@ -24,8 +24,13 @@ public class PlantPlacementManager : MonoBehaviour
     private bool deleteMode;
 
     public Image deleteButtonImage;
-    public Color normalColor = Color.green;
-    public Color deleteActiveColor = Color.red;
+    public Image addButtonImage;
+
+
+    [SerializeField] private float activeScale = 1.2f;
+    [SerializeField] private float normalScale = 1f;
+    [SerializeField] private float inactiveAlpha = 0.4f;
+
 
 
     private Vector3 planePoint;
@@ -38,31 +43,77 @@ public class PlantPlacementManager : MonoBehaviour
     public float minPlacementDistance = 0.20f; // metros
     public bool showDebugDistance = false;
 
+    [SerializeField] private float plantScale = 0.2f;
+
+
 
     private void Start()
     {
         deleteMode = false; //garante que começa a verde -> modo normal (adicionar plantas)
-        UpdateButtonColor();
+        UpdateButtonVisuals();
 
         LoadGarden();
     }
 
-    private void UpdateButtonColor()
+    private void UpdateButtonVisuals()
     {
-        if (deleteButtonImage != null)
+
+        if (addButtonImage != null && deleteButtonImage != null)
         {
-            deleteButtonImage.color = deleteMode ? deleteActiveColor : normalColor;
+
+            Color addColor = addButtonImage.color;
+            Color removeColor = deleteButtonImage.color;
+
+
+            //se estiver em modo addPlant
+            if (!deleteMode)
+            {
+
+                addColor.a = 1f; //botão de adicionar totalmente opaco
+                removeColor.a = inactiveAlpha; // torna o botão de delete mais transparente
+
+                addButtonImage.transform.localScale = Vector3.one * activeScale; // aumenta o tamanho do botão de adicionar
+                deleteButtonImage.transform.localScale = Vector3.one * normalScale; // mantém o botão de delete no tamanho normal
+            }
+            else //modo removePlant
+            {
+
+                addColor.a = inactiveAlpha; // torna o botão de adicionar mais transparente
+                removeColor.a = 1f; //botão de delete totalmente opaco
+
+
+                addButtonImage.transform.localScale = Vector3.one * normalScale; // mantém o botão de adicionar no tamanho normal
+                deleteButtonImage.transform.localScale = Vector3.one * activeScale; // aumenta o tamanho do botão de delete
+
+
+            }
+
+
+            //aplica as cores atualizadas aos botões
+            addButtonImage.color = addColor; 
+            deleteButtonImage.color = removeColor;
+
+
         }
     }
 
 
     //chamado no Unity, onClick() event do botão de delete
-    public void ToggleDeleteMode()
-    {
-        deleteMode = !deleteMode;
-        UpdateButtonColor();
 
+    public void SetAddMode()
+    {
+        deleteMode = false;
+        UpdateButtonVisuals();
     }
+
+    public void SetDeleteMode()
+    {
+        deleteMode = true;
+        UpdateButtonVisuals();
+    }
+
+
+
 
 
     private void OnEnable()
@@ -188,6 +239,9 @@ public class PlantPlacementManager : MonoBehaviour
 
         flower.transform.localRotation =
             Quaternion.Inverse(gardenRoot.rotation) * pose.rotation;
+
+        flower.transform.localScale = Vector3.one * plantScale;
+
 
         flower.tag = "Plant";
 

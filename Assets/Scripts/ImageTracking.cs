@@ -51,7 +51,7 @@ public class ImageTracking : MonoBehaviour
 
         if (markerStatusText != null)
         {
-            markerStatusText.text = "No marker detected";
+            markerStatusText.text = "Looking for marker...";
             markerStatusText.color = Color.red;
             markerStatusText.gameObject.SetActive(true);
 
@@ -102,7 +102,7 @@ public class ImageTracking : MonoBehaviour
             // Feedback visual para o utilizador
             if (markerStatusText != null)
             {
-                markerStatusText.text = "Marker detected";
+                markerStatusText.text = "Marker found!";
                 markerStatusText.color = Color.green;
                 StartCoroutine(HideMarkerText());
             }
