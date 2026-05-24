@@ -98,7 +98,6 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
-    //chamado no Unity, onClick() event do botão de delete
 
     public void SetAddMode()
     {

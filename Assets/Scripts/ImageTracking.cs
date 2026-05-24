@@ -207,12 +207,6 @@ public class ImageTracking : MonoBehaviour
 
     private IEnumerator CameraAndScanFlow()
     {
-        Debug.Log("cameraOpeningDuration = " + cameraOpeningDuration);
-
-        float t = Time.realtimeSinceStartup;
-        
-        Debug.Log("START REAL TIME: " + t);
-
 
         //esperar a câmara abrir
         yield return new WaitForSecondsRealtime(cameraOpeningDuration);
