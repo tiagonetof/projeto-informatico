@@ -210,6 +210,7 @@ public class ImageTracking : MonoBehaviour
 
         //esperar a câmara abrir
         yield return new WaitForSecondsRealtime(cameraOpeningDuration);
+        var t =0;
 
         Debug.Log("DELAY REAL: " + (Time.realtimeSinceStartup - t));
 
