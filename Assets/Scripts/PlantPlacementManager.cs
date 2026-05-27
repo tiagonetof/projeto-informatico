@@ -217,6 +217,8 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
+
+    //deteta se o toque está sobre um elemento UI (para evitar colocar plantas quando se quer clicar num botão)
     public static bool IsPointOverUIObject(Vector2 pos)
     {
         if (EventSystem.current == null)
@@ -230,8 +232,10 @@ public class PlantPlacementManager : MonoBehaviour
 
         return results.Count > 0;
     }
-    
 
+
+
+    //verifica se há um plano suficientemente grande para permitir o placement (baseado na maior área dos planos detectados)
     private float findLargestPlane()
     {
         float largestArea = 0f;
@@ -248,6 +252,15 @@ public class PlantPlacementManager : MonoBehaviour
         return largestArea;
 
     }
+
+
+
+    public bool IsSurfaceReady()
+    {
+        float largestArea = findLargestPlane();
+        return largestArea >= minPlaneArea;
+    }
+
 
 
 
@@ -270,11 +283,7 @@ public class PlantPlacementManager : MonoBehaviour
             //nao permitir placement
             //mostrar texto de "scanning plantable surface"
 
-            if (markerStatusText != null)
-            {
-                markerStatusText.text = "Looking for a surface...";
-                markerStatusText.gameObject.SetActive(true);
-            }
+           
 
         }
 

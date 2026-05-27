@@ -1,15 +1,16 @@
-﻿using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using TMPro;
-using System.Collections;
-
-
-using UnityEngine.XR.ARSubsystems; // para TrackableType e ARRaycastHit
+﻿using System.Collections;
 using System.Collections.Generic;  // para List<>
+using TMPro;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems; // para TrackableType e ARRaycastHit
 
 
 public class ImageTracking : MonoBehaviour
 {
+
+    private PlantPlacementManager placement;
+
     public ARTrackedImageManager manager;
     public GameObject gardenRootPrefab;
 
@@ -29,15 +30,18 @@ public class ImageTracking : MonoBehaviour
     [SerializeField] private float cameraOpeningDuration;
     [SerializeField] private float scanSurfaceDuration;
 
-    
 
-  
+    private bool surfaceReady = false;
+
+
+
+
 
 
 
     private void Start()
     {
-        
+        placement = FindObjectOfType<PlantPlacementManager>();
 
         if (scanSurfaceUI != null)
         {
@@ -56,12 +60,9 @@ public class ImageTracking : MonoBehaviour
 
         if (markerStatusText != null)
         {
-            markerStatusText.text = "Looking for marker...";
-            markerStatusText.color = Color.red;
-            markerStatusText.gameObject.SetActive(true);
-
+            SetStatus("Scanning the surface...", Color.red);
         }
-        
+
 
 
     }
@@ -72,7 +73,39 @@ public class ImageTracking : MonoBehaviour
        
     }
 
-  
+
+    private void Update()
+    {
+       
+        if (placement == null) return;
+
+        bool isReady = placement.IsSurfaceReady();
+
+        if (!isReady)
+        {
+            if (surfaceReady)
+            {
+
+                surfaceReady = false;
+                SetStatus("Scanning the surface...", Color.red);
+
+            }
+          
+
+            return;
+        }
+
+        // só dispara UMA vez
+        if (!surfaceReady && !markerDetected)
+        {
+            surfaceReady = true;
+            StartCoroutine(SurfaceFlow());
+        }
+
+
+    }
+
+
 
     private void OnChanged(ARTrackedImagesChangedEventArgs args)
     {
@@ -107,9 +140,8 @@ public class ImageTracking : MonoBehaviour
             // Feedback visual para o utilizador
             if (markerStatusText != null)
             {
-                markerStatusText.text = "Marker found!";
-                markerStatusText.color = Color.green;
-                StartCoroutine(HideMarkerText());
+             StartCoroutine( textFlow("Ready to plant", Color.green, "Tap on the surface to plant", Color.green, 1f) );
+
             }
 
             // Marker já cumpriu a sua função → desligar tracking
@@ -119,7 +151,7 @@ public class ImageTracking : MonoBehaviour
 
 
             // Informa o sistema de placement onde está o jardim
-            var placement = FindObjectOfType<PlantPlacementManager>();
+          
             if (placement != null)
             {
             
@@ -201,21 +233,41 @@ public class ImageTracking : MonoBehaviour
     }
 
 
-
-    private IEnumerator HideMarkerText()
+    private IEnumerator SurfaceFlow()
     {
-        yield return new WaitForSeconds(2f);
+
+        
+
+        SetStatus("Surface ready!", Color.green);
+
+        yield return new WaitForSeconds(1.5f);
+
+        if (!surfaceReady) yield break;
+
+        SetStatus("Looking for marker...", Color.yellow);
+    }
+
+    private IEnumerator textFlow(string text1, Color text1Color, string text2, Color text2Color, float duration)
+    {
+        SetStatus(text1, text1Color);
+        yield return new WaitForSeconds(duration);
+        SetStatus(text2, text2Color);
+    } 
+
+
+    private IEnumerator HideMarkerText(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         markerStatusText.gameObject.SetActive(false);
     }
 
-
+     
 
     private IEnumerator CameraAndScanFlow()
     {
     
         //esperar a câmara abrir
         yield return new WaitForSecondsRealtime(cameraOpeningDuration);
-        var t =0;
 
 
         //mostrar UI
@@ -230,6 +282,13 @@ public class ImageTracking : MonoBehaviour
             scanSurfaceUI.SetActive(false);
     }
 
+
+    private void SetStatus(string text, Color color)
+    {
+        markerStatusText.text = text;
+        markerStatusText.color = color;
+        markerStatusText.gameObject.SetActive(true);
+    }
 
     /*
 private IEnumerator HideScanSurfaceAfterDelay()
