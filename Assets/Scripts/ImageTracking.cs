@@ -29,6 +29,11 @@ public class ImageTracking : MonoBehaviour
     [SerializeField] private float cameraOpeningDuration;
     [SerializeField] private float scanSurfaceDuration;
 
+    
+
+  
+
+
 
     private void Start()
     {
@@ -207,11 +212,10 @@ public class ImageTracking : MonoBehaviour
 
     private IEnumerator CameraAndScanFlow()
     {
-
+    
         //esperar a câmara abrir
         yield return new WaitForSecondsRealtime(cameraOpeningDuration);
 
-        Debug.Log("DELAY REAL: " + (Time.realtimeSinceStartup - t));
 
         //mostrar UI
         if (scanSurfaceUI != null)

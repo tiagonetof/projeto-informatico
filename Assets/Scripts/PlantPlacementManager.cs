@@ -31,6 +31,8 @@ public class PlantPlacementManager : MonoBehaviour
     [SerializeField] private float normalScale = 1f;
     [SerializeField] private float inactiveAlpha = 0.4f;
 
+    [SerializeField] private float minPlaneArea = 0.16f; //area minima para placement (metros quadrados)
+
 
 
     private Vector3 planePoint;
@@ -46,13 +48,38 @@ public class PlantPlacementManager : MonoBehaviour
     [SerializeField] private float plantScale = 0.2f;
 
 
+    private int selectedPlantIndex = 0;
+    public GameObject inventoryUI;
+
+
+
 
     private void Start()
     {
         deleteMode = false; //garante que começa a verde -> modo normal (adicionar plantas)
-        UpdateButtonVisuals();
+        StartButtonVisuals();
+
+        inventoryUI.SetActive(false);
 
         LoadGarden();
+    }
+
+
+    private void StartButtonVisuals()
+    {
+        // Força escala normal no início
+        addButtonImage.transform.localScale = Vector3.one;
+        deleteButtonImage.transform.localScale = Vector3.one;
+
+        // força alpha normal
+        Color addColor = addButtonImage.color;
+        Color removeColor = deleteButtonImage.color;
+
+        addColor.a = 1f;
+        removeColor.a = 1f;
+
+        addButtonImage.color = addColor;
+        deleteButtonImage.color = removeColor;
     }
 
     private void UpdateButtonVisuals()
@@ -98,21 +125,57 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
+ 
 
     public void SetAddMode()
     {
+        
         deleteMode = false;
         UpdateButtonVisuals();
+        OpenInventory();
+
     }
 
     public void SetDeleteMode()
     {
         deleteMode = true;
         UpdateButtonVisuals();
+        CloseInventory(); 
+    }
+
+
+    public void OpenInventory()
+    {
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetActive(true);
+        }
+            
     }
 
 
 
+    public void CloseInventory()
+    {
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetActive(false);
+        }
+
+    }
+
+
+
+    public void SelectPlant(int index)
+    {
+        selectedPlantIndex = index;
+
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetActive(false);
+        }
+            
+    }
 
 
     private void OnEnable()
@@ -154,6 +217,41 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
+    public static bool IsPointOverUIObject(Vector2 pos)
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        PointerEventData eventPosition = new PointerEventData(EventSystem.current);
+        eventPosition.position = pos;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventPosition, results);
+
+        return results.Count > 0;
+    }
+    
+
+    private float findLargestPlane()
+    {
+        float largestArea = 0f;
+
+
+        foreach (var plane in planeManager.trackables)
+        {
+            float area = plane.size.x * plane.size.y;
+
+            if (area > largestArea)
+                largestArea = area;
+        }
+
+        return largestArea;
+
+    }
+
+
+
+
     //Este método é chamado automaticamente quando há um toque:
     private void HandleTouch(Finger finger)
     {
@@ -161,10 +259,24 @@ public class PlantPlacementManager : MonoBehaviour
         if (gardenRoot == null)
             return;
 
-        // Ignorar UI
-        if (EventSystem.current != null &&
-            EventSystem.current.IsPointerOverGameObject(finger.index))
+        if (IsPointOverUIObject(finger.screenPosition))
             return;
+
+
+        float largestArea = findLargestPlane();
+        
+        if(largestArea < minPlaneArea)
+        {
+            //nao permitir placement
+            //mostrar texto de "scanning plantable surface"
+
+            if (markerStatusText != null)
+            {
+                markerStatusText.text = "Looking for a surface...";
+                markerStatusText.gameObject.SetActive(true);
+            }
+
+        }
 
         Vector2 touchPosition = finger.screenPosition;
 
@@ -228,8 +340,7 @@ public class PlantPlacementManager : MonoBehaviour
             return;
         }
 
-        int randomIndex = Random.Range(0, flowers.Length);
-        GameObject flower = Instantiate(flowers[randomIndex], gardenRoot);
+        GameObject flower = Instantiate(flowers[selectedPlantIndex], gardenRoot);
 
 
         // Conversão world → local (correta)
@@ -246,7 +357,7 @@ public class PlantPlacementManager : MonoBehaviour
 
         PlantData data = new PlantData
         {
-            plantIndex = randomIndex,
+            plantIndex = selectedPlantIndex,
             localPosition = flower.transform.localPosition,
             localRotation = flower.transform.localRotation
         };
