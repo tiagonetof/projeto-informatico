@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    
     // Method to switch scenes
     public void LoadARScene()
     {
