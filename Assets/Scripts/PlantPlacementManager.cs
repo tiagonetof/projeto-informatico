@@ -23,13 +23,7 @@ public class PlantPlacementManager : MonoBehaviour
 
     private bool deleteMode;
 
-    public Image deleteButtonImage;
-    public Image addButtonImage;
-
-
-    [SerializeField] private float activeScale = 1.2f;
-    [SerializeField] private float normalScale = 1f;
-    [SerializeField] private float inactiveAlpha = 0.4f;
+ 
 
     [SerializeField] private float minPlaneArea = 0.16f; //area minima para placement (metros quadrados)
 
@@ -43,139 +37,35 @@ public class PlantPlacementManager : MonoBehaviour
 
     [Header("Placement distance filter")]
     public float minPlacementDistance = 0.20f; // metros
-    public bool showDebugDistance = false;
-
+ 
     [SerializeField] private float plantScale = 0.2f;
 
 
     private int selectedPlantIndex = 0;
-    public GameObject inventoryUI;
-
+  
 
 
 
     private void Start()
     {
         deleteMode = false; //garante que começa a verde -> modo normal (adicionar plantas)
-        StartButtonVisuals();
-
-        inventoryUI.SetActive(false);
-
         LoadGarden();
     }
 
 
-    private void StartButtonVisuals()
-    {
-        // Força escala normal no início
-        addButtonImage.transform.localScale = Vector3.one;
-        deleteButtonImage.transform.localScale = Vector3.one;
-
-        // força alpha normal
-        Color addColor = addButtonImage.color;
-        Color removeColor = deleteButtonImage.color;
-
-        addColor.a = 1f;
-        removeColor.a = 1f;
-
-        addButtonImage.color = addColor;
-        deleteButtonImage.color = removeColor;
-    }
-
-    private void UpdateButtonVisuals()
-    {
-
-        if (addButtonImage != null && deleteButtonImage != null)
-        {
-
-            Color addColor = addButtonImage.color;
-            Color removeColor = deleteButtonImage.color;
-
-
-            //se estiver em modo addPlant
-            if (!deleteMode)
-            {
-
-                addColor.a = 1f; //botão de adicionar totalmente opaco
-                removeColor.a = inactiveAlpha; // torna o botão de delete mais transparente
-
-                addButtonImage.transform.localScale = Vector3.one * activeScale; // aumenta o tamanho do botão de adicionar
-                deleteButtonImage.transform.localScale = Vector3.one * normalScale; // mantém o botão de delete no tamanho normal
-            }
-            else //modo removePlant
-            {
-
-                addColor.a = inactiveAlpha; // torna o botão de adicionar mais transparente
-                removeColor.a = 1f; //botão de delete totalmente opaco
-
-
-                addButtonImage.transform.localScale = Vector3.one * normalScale; // mantém o botão de adicionar no tamanho normal
-                deleteButtonImage.transform.localScale = Vector3.one * activeScale; // aumenta o tamanho do botão de delete
-
-
-            }
-
-
-            //aplica as cores atualizadas aos botões
-            addButtonImage.color = addColor; 
-            deleteButtonImage.color = removeColor;
-
-
-        }
-    }
-
-
- 
-
     public void SetAddMode()
-    {
-        
-        deleteMode = false;
-        UpdateButtonVisuals();
-        OpenInventory();
-
-    }
+    {deleteMode = false;}
 
     public void SetDeleteMode()
-    {
-        deleteMode = true;
-        UpdateButtonVisuals();
-        CloseInventory(); 
-    }
+    {deleteMode = true;}
 
-
-    public void OpenInventory()
-    {
-        if (inventoryUI != null)
-        {
-            inventoryUI.SetActive(true);
-        }
-            
-    }
-
-
-
-    public void CloseInventory()
-    {
-        if (inventoryUI != null)
-        {
-            inventoryUI.SetActive(false);
-        }
-
-    }
+    public bool IsDeleteMode()
+    {return deleteMode;}
 
 
 
     public void SelectPlant(int index)
-    {
-        selectedPlantIndex = index;
-
-        if (inventoryUI != null)
-        {
-            inventoryUI.SetActive(false);
-        }
-            
-    }
+    {selectedPlantIndex = index;}
 
 
     private void OnEnable()
@@ -263,8 +153,6 @@ public class PlantPlacementManager : MonoBehaviour
 
 
 
-
-
     //Este método é chamado automaticamente quando há um toque:
     private void HandleTouch(Finger finger)
     {
@@ -340,8 +228,7 @@ public class PlantPlacementManager : MonoBehaviour
         // distância do ponto candidato até à câmara (em metros)
         float camDist = Vector3.Distance(Camera.main.transform.position, pose.position);
 
-        if (showDebugDistance)
-            Debug.Log($"Distância à câmara: {camDist:F2} m");
+     
 
         if (camDist < minPlacementDistance)
         {
@@ -377,34 +264,6 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
-    public void SaveGarden()
-    {
-        string json = JsonUtility.ToJson(gardenData);
-        PlayerPrefs.SetString("GardenData", json);
-        PlayerPrefs.Save();
-
-        Debug.Log("Garden saved: " + json);
-    }
-
-
-
-    public void LoadGarden()
-    {
-        if (!PlayerPrefs.HasKey("GardenData"))
-        {
-            Debug.Log("No saved garden found.");
-            return;
-        }
-
-        string json = PlayerPrefs.GetString("GardenData");
-        gardenData = JsonUtility.FromJson<GardenData>(json);
-
-        Debug.Log("Garden loaded: " + json);
-    }
-
-
-
-
     public void RebuildGarden()
     {
         if (gardenRoot == null)
@@ -428,6 +287,27 @@ public class PlantPlacementManager : MonoBehaviour
         }
 
         Debug.Log("Garden rebuilt with " + gardenData.plants.Count + " plants.");
+    }
+    public void SaveGarden()
+    {
+        string json = JsonUtility.ToJson(gardenData);
+        PlayerPrefs.SetString("GardenData", json);
+        PlayerPrefs.Save();
+
+        Debug.Log("Garden saved: " + json);
+    }
+    public void LoadGarden()
+    {
+        if (!PlayerPrefs.HasKey("GardenData"))
+        {
+            Debug.Log("No saved garden found.");
+            return;
+        }
+
+        string json = PlayerPrefs.GetString("GardenData");
+        gardenData = JsonUtility.FromJson<GardenData>(json);
+
+        Debug.Log("Garden loaded: " + json);
     }
 
 

@@ -141,6 +141,7 @@ public class ImageTracking : MonoBehaviour
             if (markerStatusText != null)
             {
              StartCoroutine( textFlow("Ready to plant", Color.green, "Tap on the surface to plant", Color.green, 1f) );
+             StartCoroutine(HideMarkerText(3f));
 
             }
 

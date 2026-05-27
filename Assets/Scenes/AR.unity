@@ -156,10 +156,10 @@ RectTransform:
   - {fileID: 1701682454}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -410}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &19752085
 MonoBehaviour:
@@ -205,9 +205,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -502,10 +502,10 @@ RectTransform:
   - {fileID: 1181441330}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -290}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &125472575
 MonoBehaviour:
@@ -551,9 +551,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -635,10 +635,10 @@ RectTransform:
   - {fileID: 589628970}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -290}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &194802561
 MonoBehaviour:
@@ -684,9 +684,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -734,6 +734,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194802559}
   m_CullTransparentMesh: 1
+--- !u!1 &223974226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 223974228}
+  - component: {fileID: 223974227}
+  m_Layer: 0
+  m_Name: PlacementUIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &223974227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223974226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea40f1791a432994d9ded197003aebfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementManager: {fileID: 1748585816}
+  addButtonImage: {fileID: 1587374225}
+  deleteButtonImage: {fileID: 912367434}
+  addOutline: {fileID: 1587374228}
+  removeOutline: {fileID: 1828601340}
+  inventoryUI: {fileID: 409125813}
+  activeScale: 1.2
+  normalScale: 1
+--- !u!4 &223974228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223974226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 484.75, y: 97.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &409125813
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &409125814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -870,10 +922,10 @@ RectTransform:
   - {fileID: 1392615845}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -170}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442112154
 MonoBehaviour:
@@ -919,9 +971,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1882,6 +1934,9 @@ GameObject:
   m_Component:
   - component: {fileID: 912367430}
   - component: {fileID: 912367431}
+  - component: {fileID: 912367432}
+  - component: {fileID: 912367434}
+  - component: {fileID: 912367433}
   m_Layer: 0
   m_Name: removePlantIcon 1
   m_TagString: Untagged
@@ -1889,21 +1944,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &912367430
-Transform:
+--- !u!224 &912367430
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912367429}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -966, y: -100, z: -29.1}
+  m_LocalPosition: {x: 0, y: 0, z: -29.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1828601336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -966, y: -100}
+  m_SizeDelta: {x: 5.12, y: 5.12}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &912367431
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1956,6 +2015,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &912367432
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912367429}
+  m_CullTransparentMesh: 1
+--- !u!114 &912367433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912367429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7647059, g: 0.83137256, b: 0.10980392, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &912367434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912367429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 946451e627255b649bec07d065c5898e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &949548217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,7 +2105,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 376, y: 1}
-  m_SizeDelta: {x: 30, y: 30}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &949548219
 MonoBehaviour:
@@ -2039,8 +2151,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
         m_MethodName: CloseInventory
         m_Mode: 1
         m_Arguments:
@@ -2123,10 +2235,10 @@ RectTransform:
   - {fileID: 454095051}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -410}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1027287347
 MonoBehaviour:
@@ -2172,9 +2284,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2658,10 +2770,10 @@ RectTransform:
   - {fileID: 509016204}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -50}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1216958126
 MonoBehaviour:
@@ -2707,9 +2819,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2791,10 +2903,10 @@ RectTransform:
   - {fileID: 1327493028}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -170}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1233810933
 MonoBehaviour:
@@ -2840,9 +2952,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3192,10 +3304,10 @@ RectTransform:
   - {fileID: 772042262}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -50}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387700133
 MonoBehaviour:
@@ -3241,9 +3353,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3459,10 +3571,10 @@ RectTransform:
   - {fileID: 900333630}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -410}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1444630077
 MonoBehaviour:
@@ -3508,9 +3620,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3838,6 +3950,7 @@ GameObject:
   - component: {fileID: 1587374226}
   - component: {fileID: 1587374225}
   - component: {fileID: 1587374224}
+  - component: {fileID: 1587374228}
   m_Layer: 5
   m_Name: addButton
   m_TagString: Untagged
@@ -3889,9 +4002,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SetAddMode
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnAddButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3921,7 +4034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 53f595739d3a6934b98ddd6e279585c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd0063f280ce4704282d106f815009c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3960,6 +4073,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1587374228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587374223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.082352936, b: 0.8569734, a: 1}
+  m_EffectDistance: {x: 9, y: -9}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1669554801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4419,17 +4547,10 @@ MonoBehaviour:
     plants: []
   raycastManager: {fileID: 1748585818}
   planeManager: {fileID: 1748585817}
-  deleteButtonImage: {fileID: 1828601338}
-  addButtonImage: {fileID: 1587374225}
-  activeScale: 1.2
-  normalScale: 1
-  inactiveAlpha: 0.4
   minPlaneArea: 0.16
   planeTolerance: 0.035
   minPlacementDistance: 0.4
-  showDebugDistance: 0
   plantScale: 0.2
-  inventoryUI: {fileID: 409125813}
 --- !u!114 &1748585817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4575,6 +4696,7 @@ GameObject:
   - component: {fileID: 1828601339}
   - component: {fileID: 1828601338}
   - component: {fileID: 1828601337}
+  - component: {fileID: 1828601340}
   m_Layer: 5
   m_Name: removeButton
   m_TagString: Untagged
@@ -4646,9 +4768,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SetDeleteMode
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnDeleteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4696,6 +4818,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828601335}
   m_CullTransparentMesh: 1
+--- !u!114 &1828601340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828601335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.08235294, b: 0.85882354, a: 1}
+  m_EffectDistance: {x: 9, y: -8}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1837334411
 GameObject:
   m_ObjectHideFlags: 0
@@ -4958,10 +5095,10 @@ RectTransform:
   - {fileID: 1340601582}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -290}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1838770147
 MonoBehaviour:
@@ -5007,9 +5144,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5091,10 +5228,10 @@ RectTransform:
   - {fileID: 1068446760}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -170}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1862971806
 MonoBehaviour:
@@ -5140,9 +5277,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5224,10 +5361,10 @@ RectTransform:
   - {fileID: 1478422948}
   m_Father: {fileID: 1758518949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -50}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916110633
 MonoBehaviour:
@@ -5273,9 +5410,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1748585816}
-        m_TargetAssemblyTypeName: PlantPlacementManager, Assembly-CSharp
-        m_MethodName: SelectPlant
+      - m_Target: {fileID: 223974227}
+        m_TargetAssemblyTypeName: PlacementUIController, Assembly-CSharp
+        m_MethodName: OnSelectPlant
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5393,6 +5530,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1957424613}
   - component: {fileID: 1957424614}
+  - component: {fileID: 1957424615}
+  - component: {fileID: 1957424617}
+  - component: {fileID: 1957424616}
   m_Layer: 0
   m_Name: addPlantIcon
   m_TagString: Untagged
@@ -5400,21 +5540,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1957424613
-Transform:
+--- !u!224 &1957424613
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957424612}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -312, y: -100, z: -29.1}
+  m_LocalPosition: {x: 0, y: 0, z: -29.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1587374227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -312, y: -100}
+  m_SizeDelta: {x: 5.12, y: 5.12}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1957424614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5456,7 +5600,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 53f595739d3a6934b98ddd6e279585c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd0063f280ce4704282d106f815009c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5467,6 +5611,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &1957424615
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957424612}
+  m_CullTransparentMesh: 1
+--- !u!114 &1957424616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957424612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7647059, g: 0.83137256, b: 0.10980392, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &1957424617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957424612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: fd0063f280ce4704282d106f815009c3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2046712213
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,3 +5807,4 @@ SceneRoots:
   - {fileID: 40919617}
   - {fileID: 782628379}
   - {fileID: 8138790070213107461}
+  - {fileID: 223974228}
