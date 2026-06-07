@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -11,6 +10,9 @@ using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class PlantPlacementManager : MonoBehaviour
 {
+    private const string GardenDataKey = "GardenData";
+    private const int CurrentGardenDataVersion = 2;
+
     public GameObject[] flowers;
     public Transform gardenRoot;
 
@@ -52,6 +54,17 @@ public class PlantPlacementManager : MonoBehaviour
         LoadGarden();
     }
 
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+            SaveGarden();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGarden();
+    }
+
 
     public void SetAddMode()
     {deleteMode = false;}
@@ -81,7 +94,7 @@ public class PlantPlacementManager : MonoBehaviour
     }
 
 
-    private void RemovePlantData(Transform plant)
+    private bool RemovePlantData(Transform plant)
     {
         Vector3 localPos = plant.localPosition;
 
@@ -91,10 +104,12 @@ public class PlantPlacementManager : MonoBehaviour
             {
                 gardenData.plants.RemoveAt(i);
                 SaveGarden(); // guarda o estado atualizado do jardim após remover a planta
-                return;
+                return true;
             }
         }
 
+        Debug.LogWarning("Plant data not found for removed plant.");
+        return false;
     }
 
 
@@ -168,11 +183,7 @@ public class PlantPlacementManager : MonoBehaviour
         
         if(largestArea < minPlaneArea)
         {
-            //nao permitir placement
-            //mostrar texto de "scanning plantable surface"
-
-           
-
+            return;
         }
 
         Vector2 touchPosition = finger.screenPosition;
@@ -181,16 +192,25 @@ public class PlantPlacementManager : MonoBehaviour
         if (deleteMode)
         {
             Ray ray = Camera.main.ScreenPointToRay(touchPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) &&
-                hit.transform.CompareTag("Plant"))
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                Plant deletedPlantComponent = hit.transform.GetComponentInParent<Plant>();
+                if (deletedPlantComponent == null && !hit.transform.CompareTag("Plant"))
+                    return;
 
-                Transform plant = hit.transform;
+                Transform plantTransform = deletedPlantComponent != null ? deletedPlantComponent.transform : hit.transform;
 
                 // remover dos dados
-                RemovePlantData(plant);
+                bool removedFromData = RemovePlantData(plantTransform);
 
-                Destroy(plant.gameObject);
+                // Se esta era a última planta visual, força o save a ficar vazio.
+                if (!removedFromData && gardenRoot != null && gardenRoot.childCount <= 1)
+                {
+                    gardenData.plants.Clear();
+                    SaveGarden();
+                }
+
+                Destroy(plantTransform.gameObject);
 
                 
             }
@@ -251,11 +271,17 @@ public class PlantPlacementManager : MonoBehaviour
 
         flower.tag = "Plant";
 
+        Plant newPlantComponent = flower.GetComponent<Plant>();
+        if (newPlantComponent != null)
+            newPlantComponent.Initialize(Plant.PlantStage.Sprout, newPlantComponent.GrowthTime);
+
         PlantData data = new PlantData
         {
             plantIndex = selectedPlantIndex,
             localPosition = flower.transform.localPosition,
-            localRotation = flower.transform.localRotation
+            localRotation = flower.transform.localRotation,
+            plantStage = (int)Plant.PlantStage.Sprout,
+            remainingGrowthTime = newPlantComponent != null ? newPlantComponent.RemainingGrowthTime : 0f
         };
 
         gardenData.plants.Add(data);
@@ -283,31 +309,104 @@ public class PlantPlacementManager : MonoBehaviour
             GameObject plant = Instantiate(flowers[data.plantIndex], gardenRoot);
             plant.transform.localPosition = data.localPosition;
             plant.transform.localRotation = data.localRotation;
+            plant.transform.localScale = Vector3.one * plantScale;
             plant.tag = "Plant";
+
+            Plant plantComponent = plant.GetComponent<Plant>();
+            if (plantComponent != null)
+            {
+                Plant.PlantStage stage = (Plant.PlantStage)data.plantStage;
+                plantComponent.Initialize(stage, data.remainingGrowthTime);
+            }
         }
 
         Debug.Log("Garden rebuilt with " + gardenData.plants.Count + " plants.");
     }
     public void SaveGarden()
     {
+        gardenData.version = CurrentGardenDataVersion;
+        UpdateGardenDataFromScene();
+
+        if (gardenData.plants.Count == 0)
+        {
+            PlayerPrefs.DeleteKey(GardenDataKey);
+            PlayerPrefs.Save();
+            Debug.Log("Garden save cleared.");
+            return;
+        }
+
         string json = JsonUtility.ToJson(gardenData);
-        PlayerPrefs.SetString("GardenData", json);
+        PlayerPrefs.SetString(GardenDataKey, json);
         PlayerPrefs.Save();
 
         Debug.Log("Garden saved: " + json);
     }
     public void LoadGarden()
     {
-        if (!PlayerPrefs.HasKey("GardenData"))
+        if (!PlayerPrefs.HasKey(GardenDataKey))
         {
             Debug.Log("No saved garden found.");
             return;
         }
 
-        string json = PlayerPrefs.GetString("GardenData");
-        gardenData = JsonUtility.FromJson<GardenData>(json);
+        string json = PlayerPrefs.GetString(GardenDataKey);
+
+        if (string.IsNullOrWhiteSpace(json) || !json.Contains("\"version\""))
+        {
+            PlayerPrefs.DeleteKey(GardenDataKey);
+            PlayerPrefs.Save();
+            gardenData = new GardenData();
+            Debug.Log("Ignored old or invalid garden save data.");
+            return;
+        }
+
+        GardenData loadedGardenData = JsonUtility.FromJson<GardenData>(json);
+
+        if (loadedGardenData == null || loadedGardenData.version != CurrentGardenDataVersion)
+        {
+            PlayerPrefs.DeleteKey(GardenDataKey);
+            PlayerPrefs.Save();
+            gardenData = new GardenData();
+            Debug.Log("Ignored old or invalid garden save data.");
+            return;
+        }
+
+        gardenData = loadedGardenData;
 
         Debug.Log("Garden loaded: " + json);
+    }
+
+    private void UpdateGardenDataFromScene()
+    {
+        if (gardenRoot == null)
+            return;
+
+        foreach (Transform child in gardenRoot)
+        {
+            Plant plant = child.GetComponent<Plant>();
+            if (plant == null)
+                continue;
+
+            PlantData data = FindPlantData(child.localPosition);
+            if (data == null)
+                continue;
+
+            data.localPosition = child.localPosition;
+            data.localRotation = child.localRotation;
+            data.plantStage = (int)plant.CurrentStage;
+            data.remainingGrowthTime = plant.RemainingGrowthTime;
+        }
+    }
+
+    private PlantData FindPlantData(Vector3 localPosition)
+    {
+        for (int i = 0; i < gardenData.plants.Count; i++)
+        {
+            if (Vector3.Distance(gardenData.plants[i].localPosition, localPosition) < 0.001f)
+                return gardenData.plants[i];
+        }
+
+        return null;
     }
 
 

@@ -760,12 +760,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 223974226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea40f1791a432994d9ded197003aebfe, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b4ae6186eb3441c693e28d2db9aaaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placementManager: {fileID: 1748585816}
   addButtonImage: {fileID: 1587374225}
-  deleteButtonImage: {fileID: 912367434}
+  deleteButtonImage: {fileID: 1828601338}
   addOutline: {fileID: 1587374228}
   removeOutline: {fileID: 1828601340}
   inventoryUI: {fileID: 409125813}
