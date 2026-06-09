@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Inventory.unity
     guid: 2fa41178e964445748d1858585ffddda
   - enabled: 1
+    path: Assets/Scenes/PlantDetails.unity
+    guid: 4b2380791952e4946b1ddff8b796079d
+  - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: cb56dc22909ac4c19ae9054da9d74943
   m_configObjects:

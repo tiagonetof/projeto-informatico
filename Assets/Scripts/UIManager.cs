@@ -23,9 +23,21 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Inventory");
     }
 
+    public void LoadPlantDetailsScene()
+    {
+        Debug.Log("O botão foi clicado com sucesso!");
+        SceneManager.LoadScene("PlantDetails");
+    }
+
     public void LoadSettingsScene()
     {
         Debug.Log("O botão foi clicado com sucesso!");
         SceneManager.LoadScene("Settings");
+    }
+
+    public void LoadNotificationsScene()
+    {
+        Debug.Log("O botão foi clicado com sucesso!");
+        SceneManager.LoadScene("Notifications");
     }
 }

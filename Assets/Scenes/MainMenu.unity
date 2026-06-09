@@ -1953,6 +1953,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  selectedPlantIndex: -1
+  plantDatabase:
+  - plantName: Corema album (camarinha)
+    requiredLevel: 1
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
+  - plantName: Adenocarpus lainzii (condesso)
+    requiredLevel: 1
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
+  - plantName: Adenocarpus telonesis (condes...)
+    requiredLevel: 2
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
+  - plantName: Cistus albidus (roselha-grande)
+    requiredLevel: 2
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
+  - plantName: Arbutus unedo (medronheiro)
+    requiredLevel: 3
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
+  - plantName: Plant a decidir...
+    requiredLevel: 3
+    totalPlanted: 0
+    plantIcon: {fileID: 0}
+    plantPrefab: {fileID: 0}
 --- !u!1 &1966486124
 GameObject:
   m_ObjectHideFlags: 0
