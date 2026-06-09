@@ -136,6 +136,12 @@ public class ImageTracking : MonoBehaviour
 
             markerDetected = true;
 
+            if (placement != null)
+            {
+                placement.SetMarkerDetected(true);
+            }
+
+
 
             // Feedback visual para o utilizador
             if (markerStatusText != null)

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -25,7 +27,10 @@ public class PlantPlacementManager : MonoBehaviour
 
     private bool deleteMode;
 
- 
+    private bool markerDetected = false;
+    public TMP_Text noMarkerDetectedWarningText;
+
+
 
     [SerializeField] private float minPlaneArea = 0.16f; //area minima para placement (metros quadrados)
 
@@ -52,6 +57,13 @@ public class PlantPlacementManager : MonoBehaviour
     {
         deleteMode = false; //garante que começa a verde -> modo normal (adicionar plantas)
         LoadGarden();
+
+
+        if (noMarkerDetectedWarningText != null)
+        {
+            noMarkerDetectedWarningText.gameObject.SetActive(false);
+        }
+
     }
 
     private void OnApplicationPause(bool pauseStatus)
@@ -76,6 +88,7 @@ public class PlantPlacementManager : MonoBehaviour
     {return deleteMode;}
 
 
+    public void SetMarkerDetected(bool value){markerDetected = value;}
 
     public void SelectPlant(int index)
     {selectedPlantIndex = index;}
@@ -171,11 +184,20 @@ public class PlantPlacementManager : MonoBehaviour
     //Este método é chamado automaticamente quando há um toque:
     private void HandleTouch(Finger finger)
     {
-        // Sem jardim → não faz nada
-        if (gardenRoot == null)
+        if (IsPointOverUIObject(finger.screenPosition))
             return;
 
-        if (IsPointOverUIObject(finger.screenPosition))
+
+        //em caso de toque, se ainda nao houver marker -> mostra aviso e não permite colocar plantas
+        if (!markerDetected)
+        {
+            StartCoroutine(ShowWarning());
+            return;
+        }
+
+
+        // Sem jardim → não faz nada
+        if (gardenRoot == null)
             return;
 
 
@@ -408,6 +430,23 @@ public class PlantPlacementManager : MonoBehaviour
 
         return null;
     }
+
+    private IEnumerator ShowWarning()
+    {
+        if (noMarkerDetectedWarningText != null)
+        {
+            noMarkerDetectedWarningText.text = "No marker found yet!";
+            noMarkerDetectedWarningText.gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        if (noMarkerDetectedWarningText != null)
+        {
+            noMarkerDetectedWarningText.gameObject.SetActive(false);
+        }
+    }
+
 
 
 }
