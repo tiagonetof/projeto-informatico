@@ -9,7 +9,7 @@ public class PlantData
     public Vector3 localPosition;
     public Quaternion localRotation;
     public int plantStage = (int)Plant.PlantStage.Sprout;
-    public float remainingGrowthTime;
+   public int daysWatered;
 }
 
 [Serializable]

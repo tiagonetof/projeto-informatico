@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Plant Database")]
     // Our array of 6 plants
-    public PlantInfo[] plantDatabase = new PlantInfo[6]; 
-  
-    
+    public PlantInfo[] plantDatabase = new PlantInfo[6];
+
+    private int adultPlantsCount = 0;
 
     private void Awake()
     {
@@ -50,5 +50,22 @@ public class GameManager : MonoBehaviour
             plantDatabase[index].totalPlanted++;
             Debug.Log("Planted " + plantDatabase[index].plantName + "! Total: " + plantDatabase[index].totalPlanted);
         }
+    }
+
+    public void OnPlantFullyGrown()
+    {
+        adultPlantsCount++;
+
+        // cada nível precisa de 2 plantas Adult
+        if (adultPlantsCount >= 2)
+        {
+            LevelUp();
+            adultPlantsCount = 0;
+        }
+    }
+
+    private void LevelUp()
+    {
+        currentLevel++;
     }
 }

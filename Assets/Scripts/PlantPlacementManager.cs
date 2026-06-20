@@ -295,7 +295,7 @@ public class PlantPlacementManager : MonoBehaviour
 
         Plant newPlantComponent = flower.GetComponent<Plant>();
         if (newPlantComponent != null)
-            newPlantComponent.Initialize(Plant.PlantStage.Sprout, newPlantComponent.GrowthTime);
+            newPlantComponent.Initialize(Plant.PlantStage.Sprout);
 
         PlantData data = new PlantData
         {
@@ -303,7 +303,7 @@ public class PlantPlacementManager : MonoBehaviour
             localPosition = flower.transform.localPosition,
             localRotation = flower.transform.localRotation,
             plantStage = (int)Plant.PlantStage.Sprout,
-            remainingGrowthTime = newPlantComponent != null ? newPlantComponent.RemainingGrowthTime : 0f
+            daysWatered = 0
         };
 
         gardenData.plants.Add(data);
@@ -338,7 +338,10 @@ public class PlantPlacementManager : MonoBehaviour
             if (plantComponent != null)
             {
                 Plant.PlantStage stage = (Plant.PlantStage)data.plantStage;
-                plantComponent.Initialize(stage, data.remainingGrowthTime);
+
+                plantComponent.Initialize(stage);
+                plantComponent.SetDaysWatered(data.daysWatered);
+
             }
         }
 
@@ -416,7 +419,7 @@ public class PlantPlacementManager : MonoBehaviour
             data.localPosition = child.localPosition;
             data.localRotation = child.localRotation;
             data.plantStage = (int)plant.CurrentStage;
-            data.remainingGrowthTime = plant.RemainingGrowthTime;
+            data.daysWatered = plant.GetDaysWatered();
         }
     }
 

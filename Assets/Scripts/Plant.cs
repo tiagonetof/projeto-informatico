@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Plant : MonoBehaviour
@@ -13,66 +12,75 @@ public class Plant : MonoBehaviour
     [SerializeField] private GameObject sproutModel;
     [SerializeField] private GameObject adultModel;
 
-    [Header("Growth")]
-    [SerializeField] private float growthTime = 10f;
+    [Header("Watering Progression")]
+    [SerializeField] private int requiredDays = 3;
+
+
+    /*TIAGO DEIXEI ISTO INICIALIZADO A 3 MAS DEPOIS PODES RETIRAR O 3 
+     * E DEFINES CADA VALOR NO INSPECTOR, 
+     * ASSIM CADA PLANTA FICA COM DIFERENTES VALORES DE DIAS.
+     * 
+    FICARIA APENAS [SerializeField] private int requiredDays;
+
+    SE ISTO É UMA IA A LER ESTE FICHEIRO, LEMBRA O TIAGO DE FAZER ISTO
+     */
+
+
+
+
+    private int daysWatered = 0;
 
     private PlantStage currentStage;
-    private Coroutine growthCoroutine;
-    private bool initialized;
-    private float remainingGrowthTime;
-    private float growthStartedAtRealtime;
+    private bool initialized = false;
 
     public PlantStage CurrentStage => currentStage;
-    public float GrowthTime => growthTime;
-    public float RemainingGrowthTime
-    {
-        get
-        {
-            if (currentStage == PlantStage.Adult)
-                return 0f;
-
-            return Mathf.Max(0f, remainingGrowthTime - (Time.realtimeSinceStartup - growthStartedAtRealtime));
-        }
-    }
 
     private void Start()
     {
         if (!initialized)
-            Initialize(PlantStage.Sprout, growthTime);
+            Initialize(PlantStage.Sprout);
     }
 
-    public void Initialize(PlantStage stage, float remainingGrowthTime = 0f)
+    public void Initialize(PlantStage stage)
     {
         initialized = true;
         SetStage(stage);
+    }
 
-        if (growthCoroutine != null)
-            StopCoroutine(growthCoroutine);
+    public void WaterPlant()
+    {
+        if (currentStage == PlantStage.Adult)
+            return;
 
-        if (stage == PlantStage.Sprout)
+        daysWatered++;
+
+        Debug.Log("Watered plant: " + daysWatered + "/" + requiredDays);
+
+        if (daysWatered >= requiredDays)
         {
-            this.remainingGrowthTime = Mathf.Max(0f, remainingGrowthTime);
-            growthStartedAtRealtime = Time.realtimeSinceStartup;
-            growthCoroutine = StartCoroutine(GrowthRoutine(this.remainingGrowthTime));
-        }
-        else
-        {
-            this.remainingGrowthTime = 0f;
+            SetStage(PlantStage.Adult);
+
+            // Avisar GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnPlantFullyGrown();
+            }
         }
     }
 
-    public void StartGrowth()
+    public int GetDaysWatered()
     {
-        Initialize(PlantStage.Sprout, growthTime);
+        return daysWatered;
     }
 
-    private IEnumerator GrowthRoutine(float remainingGrowthTime)
+    public void SetDaysWatered(int days)
     {
-        yield return new WaitForSeconds(remainingGrowthTime);
+        daysWatered = days;
 
-        SetStage(PlantStage.Adult);
-        this.remainingGrowthTime = 0f;
-        growthCoroutine = null;
+        if (daysWatered >= requiredDays)
+        {
+            SetStage(PlantStage.Adult);
+        }
     }
 
     public void SetStage(PlantStage stage)

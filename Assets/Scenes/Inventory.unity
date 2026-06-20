@@ -502,7 +502,7 @@ MonoBehaviour:
   plantIndex: 1
   plantNameText: {fileID: 1103120834}
   countText: {fileID: 1193767352}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 6892068}
 --- !u!1 &165300541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   plantIndex: 2
   plantNameText: {fileID: 301545767}
   countText: {fileID: 1262606789}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 2084000076}
 --- !u!1 &724803161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1922,7 @@ MonoBehaviour:
   plantIndex: 0
   plantNameText: {fileID: 1540140207}
   countText: {fileID: 1142328098}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 31245595}
 --- !u!1 &925866384
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,7 +3138,7 @@ MonoBehaviour:
   plantIndex: 3
   plantNameText: {fileID: 940264055}
   countText: {fileID: 526064221}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 925866386}
 --- !u!1 &1262606787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3508,7 +3508,7 @@ MonoBehaviour:
   plantIndex: 5
   plantNameText: {fileID: 2107997311}
   countText: {fileID: 324497769}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 332524079}
 --- !u!1 &1391865661
 GameObject:
   m_ObjectHideFlags: 0
@@ -4403,7 +4403,7 @@ MonoBehaviour:
   plantIndex: 4
   plantNameText: {fileID: 165300543}
   countText: {fileID: 724803163}
-  plantImage: {fileID: 0}
+  plantImage: {fileID: 1391865663}
 --- !u!1 &1897136184
 GameObject:
   m_ObjectHideFlags: 0
