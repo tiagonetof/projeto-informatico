@@ -53,10 +53,5 @@ public class InventoryButton : MonoBehaviour
         }
     }
 
-    // This function will run when the player clicks an UNLOCKED button
-    public void OnClickSelectPlant()
-    {
-        GameManager.Instance.selectedPlantIndex = plantIndex;
-        Debug.Log("Selected plant index: " + plantIndex + " (" + GameManager.Instance.plantDatabase[plantIndex].plantName + ")");
-    }
+ 
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 // This class represents the "Identity Card" for each plant
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     [Header("Plant Database")]
     // Our array of 6 plants
     public PlantInfo[] plantDatabase = new PlantInfo[6]; 
+  
+    
 
     private void Awake()
     {
