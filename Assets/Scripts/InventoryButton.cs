@@ -17,13 +17,27 @@ public class InventoryButton : MonoBehaviour
     void Start()
     {
         myButton = GetComponent<Button>();
+        if (myButton != null)
+        {
+            myButton.onClick.AddListener(HandleClick);
+        }
+
         UpdateButtonUI();
+    }
+
+    private void OnDestroy()
+    {
+        if (myButton != null)
+        {
+            myButton.onClick.RemoveListener(HandleClick);
+        }
     }
 
     public void UpdateButtonUI()
     {
         // Safety check to ensure the GameManager exists
-        if (GameManager.Instance == null) return;
+        if (GameManager.Instance == null || plantIndex < 0 || plantIndex >= GameManager.Instance.plantDatabase.Length)
+            return;
 
         // Fetch the specific plant info from the GameManager database
         PlantInfo myInfo = GameManager.Instance.plantDatabase[plantIndex];
@@ -53,5 +67,21 @@ public class InventoryButton : MonoBehaviour
         }
     }
 
+
+    private void HandleClick()
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        GameManager.Instance.SelectPlantSpecies(plantIndex);
+
+        PlantDetailsManager detailsManager = FindObjectOfType<PlantDetailsManager>();
+        if (detailsManager != null)
+        {
+            detailsManager.GenerateDynamicList();
+        }
+
+        Debug.Log("Selected plant species index: " + plantIndex);
+    }
  
 }

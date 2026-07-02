@@ -1,20 +1,22 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
+public class GardenData
+{
+    public int version;
+    public List<PlantData> plants = new List<PlantData>();
+}
+
+[System.Serializable]
 public class PlantData
 {
     public int plantIndex;
     public Vector3 localPosition;
     public Quaternion localRotation;
-    public int plantStage = (int)Plant.PlantStage.Sprout;
-   public int daysWatered;
-}
-
-[Serializable]
-public class GardenData
-{
-    public int version = 2;
-    public List<PlantData> plants = new List<PlantData>();
+    public int plantStage = 0; 
+    public int daysWatered;
+    
+    public string lastWatered;   
+    public string plantingDate;  
 }

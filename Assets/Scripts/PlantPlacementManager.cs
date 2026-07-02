@@ -56,7 +56,16 @@ public class PlantPlacementManager : MonoBehaviour
     private void Start()
     {
         deleteMode = false; //garante que começa a verde -> modo normal (adicionar plantas)
-        LoadGarden();
+        if (GameManager.Instance != null && GameManager.Instance.userGarden != null && GameManager.Instance.userGarden.plants.Count > 0)
+        {
+            gardenData = GameManager.Instance.userGarden;
+        }
+        else
+        {
+            LoadGarden();
+        }
+
+        SyncGardenDataToGameManager();
 
 
         if (noMarkerDetectedWarningText != null)
@@ -278,6 +287,13 @@ public class PlantPlacementManager : MonoBehaviour
             return;
         }
 
+        int speciesIndex = GameManager.Instance != null
+            ? GameManager.Instance.GetSpeciesIndexFromArIndex(selectedPlantIndex)
+            : selectedPlantIndex;
+
+        if (speciesIndex < 0 || flowers == null || flowers.Length == 0)
+            return;
+
         GameObject flower = Instantiate(flowers[selectedPlantIndex], gardenRoot);
 
 
@@ -299,14 +315,21 @@ public class PlantPlacementManager : MonoBehaviour
 
         PlantData data = new PlantData
         {
-            plantIndex = selectedPlantIndex,
+            plantIndex = speciesIndex,
             localPosition = flower.transform.localPosition,
             localRotation = flower.transform.localRotation,
-            plantStage = (int)Plant.PlantStage.Sprout,
-            daysWatered = 0
+            plantStage = 0,
+            daysWatered = 0,
+            lastWatered = string.Empty,
+            plantingDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm")
         };
 
         gardenData.plants.Add(data);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddPlantedItem(selectedPlantIndex);
+        }
+        SyncGardenDataToGameManager();
         SaveGarden(); // Salva o estado do jardim após adicionar a planta
 
     }
@@ -328,7 +351,11 @@ public class PlantPlacementManager : MonoBehaviour
 
         foreach (var data in gardenData.plants)
         {
-            GameObject plant = Instantiate(flowers[data.plantIndex], gardenRoot);
+            int modelIndex = data.plantIndex;
+            if (modelIndex < 0 || modelIndex >= flowers.Length)
+                modelIndex = Mathf.Clamp(modelIndex, 0, flowers.Length - 1);
+
+            GameObject plant = Instantiate(flowers[modelIndex], gardenRoot);
             plant.transform.localPosition = data.localPosition;
             plant.transform.localRotation = data.localRotation;
             plant.transform.localScale = Vector3.one * plantScale;
@@ -349,6 +376,7 @@ public class PlantPlacementManager : MonoBehaviour
     }
     public void SaveGarden()
     {
+        SyncGardenDataToGameManager();
         gardenData.version = CurrentGardenDataVersion;
         UpdateGardenDataFromScene();
 
@@ -363,6 +391,11 @@ public class PlantPlacementManager : MonoBehaviour
         string json = JsonUtility.ToJson(gardenData);
         PlayerPrefs.SetString(GardenDataKey, json);
         PlayerPrefs.Save();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.userGarden = gardenData;
+        }
 
         Debug.Log("Garden saved: " + json);
     }
@@ -397,8 +430,18 @@ public class PlantPlacementManager : MonoBehaviour
         }
 
         gardenData = loadedGardenData;
+        SyncGardenDataToGameManager();
 
         Debug.Log("Garden loaded: " + json);
+    }
+
+    private void SyncGardenDataToGameManager()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.userGarden = gardenData;
+            GameManager.Instance.RebuildPlantCountsFromGarden();
+        }
     }
 
     private void UpdateGardenDataFromScene()
@@ -418,8 +461,6 @@ public class PlantPlacementManager : MonoBehaviour
 
             data.localPosition = child.localPosition;
             data.localRotation = child.localRotation;
-            data.plantStage = (int)plant.CurrentStage;
-            data.daysWatered = plant.GetDaysWatered();
         }
     }
 
