@@ -15,6 +15,9 @@ public class PlantInfo
 
 public class GameManager : MonoBehaviour
 {
+    private const int FinalStageValue = 1;
+    private const int DeadStageValue = 2;
+
     public static GameManager Instance;
 
     private const string GardenDataKey = "GardenData";
@@ -169,11 +172,11 @@ public class GameManager : MonoBehaviour
         if (userGarden == null || userGarden.plants == null || userGarden.plants.Count == 0)
             return false;
 
-        bool[] plantedSpecies = new bool[requiredSpeciesCount];
+        bool[] speciesSatisfied = new bool[requiredSpeciesCount];
 
         for (int i = 0; i < requiredSpeciesCount; i++)
         {
-            plantedSpecies[i] = false;
+            speciesSatisfied[i] = false;
         }
 
         foreach (PlantData plantData in userGarden.plants)
@@ -181,15 +184,18 @@ public class GameManager : MonoBehaviour
             if (plantData.plantIndex < 0 || plantData.plantIndex >= requiredSpeciesCount)
                 continue;
 
-            plantedSpecies[plantData.plantIndex] = true;
+            if (plantData.plantStage == DeadStageValue)
+                continue;
 
-            if (plantData.plantStage != 1)
+            if (plantData.plantStage != FinalStageValue)
                 return false;
+
+            speciesSatisfied[plantData.plantIndex] = true;
         }
 
         for (int i = 0; i < requiredSpeciesCount; i++)
         {
-            if (!plantedSpecies[i])
+            if (!speciesSatisfied[i])
                 return false;
         }
 

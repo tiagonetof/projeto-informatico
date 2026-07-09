@@ -321,7 +321,7 @@ public class PlantPlacementManager : MonoBehaviour
             plantStage = 0,
             daysWatered = 0,
             lastWatered = string.Empty,
-            plantingDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+            plantingDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
         };
 
         gardenData.plants.Add(data);
