@@ -2497,37 +2497,37 @@ MonoBehaviour:
   currentLevel: 1
   selectedPlantIndex: -1
   plantDatabase:
-  - plantName: Plant 0 (Row root a2)
+  - plantName: Plant Lumiflora
     requiredLevel: 1
     totalPlanted: 0
     plantIcon: {fileID: 0}
     plantPrefab: {fileID: 5326394646425155438, guid: 6171449839304f24d804cb6eeb01b0ea, type: 3}
     wateringIntervalDays: 0
-  - plantName: Plant 1 (row root b4)
+  - plantName: Plant Emberose
     requiredLevel: 1
     totalPlanted: 0
     plantIcon: {fileID: 0}
     plantPrefab: {fileID: 1411746076562654254, guid: b7beed5ebb490ae49993d8425650619b, type: 3}
     wateringIntervalDays: 0
-  - plantName: Plant 2 (row root d6)
+  - plantName: Plant Nebulily
     requiredLevel: 2
     totalPlanted: 0
     plantIcon: {fileID: 0}
     plantPrefab: {fileID: 7433122136548516780, guid: 529cdb449a5ea464fb8d1a2c447bec07, type: 3}
     wateringIntervalDays: 0
-  - plantName: Plant 3 (Spin reef b2)
+  - plantName: Plant Glaciola
     requiredLevel: 2
     totalPlanted: 0
     plantIcon: {fileID: 0}
     plantPrefab: {fileID: 3602177968231115889, guid: 234b1036c196ba646a188243f5aab7bb, type: 3}
     wateringIntervalDays: 0
-  - plantName: Plant 4 (spin reef b4)
+  - plantName: Plant Auralis
     requiredLevel: 3
     totalPlanted: 0
     plantIcon: {fileID: 0}
     plantPrefab: {fileID: 6439435842357232082, guid: ac2ebff0fd2aa1149a5193156907383e, type: 3}
     wateringIntervalDays: 0
-  - plantName: Plant 5 (spin reef c7)
+  - plantName: Plant Chronoblossom
     requiredLevel: 3
     totalPlanted: 0
     plantIcon: {fileID: 0}
